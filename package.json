@@ -1,0 +1,19 @@
+{
+  "name": "open-weather-map",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Garage71/open-weather-map.git"
+  },
+  "author": "Garage71",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Garage71/open-weather-map/issues"
+  },
+  "homepage": "https://github.com/Garage71/open-weather-map#readme"
+}
