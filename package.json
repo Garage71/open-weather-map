@@ -1,0 +1,40 @@
+{
+  "name": "open-weather-map",
+  "version": "1.0.0",
+  "description": "Open Weather Map application based on NodeJS/React/TypesScript stack",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run build && npm run lint && node dist/index.js",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsc --watch & nodemon dist",
+    "lint": "tsc --noEmit && eslint src/**/*.{js,ts,tsx} --quiet --fix",
+    "tsc": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Garage71/open-weather-map.git"
+  },
+  "author": "https://github.com/Garage71",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Garage71/open-weather-map/issues"
+  },
+  "homepage": "https://github.com/Garage71/open-weather-map#readme",
+  "devDependencies": {
+    "@types/koa": "^2.0.48",
+    "@types/koa-static": "^4.0.1",
+    "@types/node": "^12.0.2",
+    "@typescript-eslint/eslint-plugin": "^1.9.0",
+    "@typescript-eslint/parser": "^1.9.0",
+    "eslint-config-prettier": "^4.3.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "koa-static": "^5.0.0",
+    "prettier": "^1.17.1",
+    "typescript": "^3.4.5"
+  },
+  "dependencies": {
+    "eslint": "^5.16.0",
+    "koa": "^2.7.0"
+  }
+}
