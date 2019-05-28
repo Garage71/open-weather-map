@@ -3,16 +3,10 @@ import * as Static from 'koa-static';
 import * as Router from 'koa-router';
 import * as Logger from 'koa-logger';
 import * as BodyParser from 'koa-BodyParser';
+import { getCurrentByCoordinates, getForecastByCoordinates } from './api/owmApi';
+import { suggest, getCoordinates } from './api/arcgisApi';
 const app = new Koa();
-import { getCurrentByCoordinates, getForecastByCoordinates } from './api/api';
 
-/*
-app.use(
-    async (ctx): Promise<void> => {
-        ctx.body = 'Hello World';
-    },
-);
-*/
 const router = new Router();
 router.post(
     '/api/currentByCoordinates',
@@ -29,6 +23,24 @@ router.post(
         console.log(ctx.request.body);
         const { lattitude, longitude } = ctx.request.body;
         const forecast = await getForecastByCoordinates(lattitude, longitude);
+        ctx.response.body = forecast;
+    },
+);
+router.post(
+    '/api/suggest',
+    async (ctx): Promise<void> => {
+        console.log(ctx.request.body);
+        const { text } = ctx.request.body;
+        const forecast = await suggest(text);
+        ctx.response.body = forecast;
+    },
+);
+router.post(
+    '/api/getCoordinates',
+    async (ctx): Promise<void> => {
+        console.log(ctx.request.body);
+        const { magicKey } = ctx.request.body;
+        const forecast = await getCoordinates(magicKey);
         ctx.response.body = forecast;
     },
 );
