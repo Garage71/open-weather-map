@@ -1,26 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
+import { createMuiTheme } from '@material-ui/core';
+import { ThemeProvider } from '@material-ui/styles';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { blue, grey } from '@material-ui/core/colors';
+import AppNavBar from './components/navigation/AppNavBar';
 
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const theme = createMuiTheme({
+    palette: {
+        primary: blue,
+        secondary: grey,
+    },
+});
+
+const App: React.FC = (): React.ReactElement => {
+    return (
+        <Router>
+            <ThemeProvider theme={theme}>
+                <AppNavBar />
+            </ThemeProvider>
+        </Router>
+    );
+};
 
 export default App;

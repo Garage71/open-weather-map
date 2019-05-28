@@ -13,8 +13,8 @@ router.post(
     async (ctx): Promise<void> => {
         console.log(ctx.request.body);
         const { lattitude, longitude } = ctx.request.body;
-        const forecast = await getCurrentByCoordinates(lattitude, longitude);
-        ctx.response.body = forecast;
+        const weather = await getCurrentByCoordinates(lattitude, longitude);
+        ctx.response.body = weather;
     },
 );
 router.post(
@@ -31,8 +31,8 @@ router.post(
     async (ctx): Promise<void> => {
         console.log(ctx.request.body);
         const { text } = ctx.request.body;
-        const forecast = await suggest(text);
-        ctx.response.body = forecast;
+        const suggestions = await suggest(text);
+        ctx.response.body = suggestions;
     },
 );
 router.post(
@@ -40,8 +40,8 @@ router.post(
     async (ctx): Promise<void> => {
         console.log(ctx.request.body);
         const { magicKey } = ctx.request.body;
-        const forecast = await getCoordinates(magicKey);
-        ctx.response.body = forecast;
+        const coordinates = await getCoordinates(magicKey);
+        ctx.response.body = coordinates;
     },
 );
 
