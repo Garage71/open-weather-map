@@ -12,9 +12,9 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Compiling backend
-      - tsc
+      - npm run tsc
       - echo Building Client
-      - npm run build
+      - npm run build-client
       - echo Build finished on `date`
 artifacts:
   type: zip
