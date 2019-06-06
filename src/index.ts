@@ -5,11 +5,10 @@ import * as Logger from 'koa-logger';
 import * as BodyParser from 'koa-bodyparser';
 import { getCurrentByCoordinates, getForecastByCoordinates } from './api/owmApi';
 import { suggest, getCoordinates } from './api/arcgisApi';
-import { addListener } from 'cluster';
 
 const port = process.env.PORT || 3000;
 const app = new Koa();
-asd;
+
 const router = new Router();
 router.post(
     '/api/currentByCoordinates',
@@ -53,8 +52,6 @@ app.use(BodyParser());
 app.use(Static('./build'));
 app.use(router.routes());
 
-// if (!module.parent) {
 app.listen(port);
-//}
 
 module.exports = app;
