@@ -2,9 +2,11 @@ import * as Koa from 'koa';
 import * as Static from 'koa-static';
 import * as Router from 'koa-router';
 import * as Logger from 'koa-logger';
-import * as BodyParser from 'koa-BodyParser';
+import * as BodyParser from 'koa-bodyparser';
 import { getCurrentByCoordinates, getForecastByCoordinates } from './api/owmApi';
 import { suggest, getCoordinates } from './api/arcgisApi';
+
+const port = process.env.PORT || 3000;
 const app = new Koa();
 
 const router = new Router();
@@ -51,7 +53,7 @@ app.use(Static('./build'));
 app.use(router.routes());
 
 // if (!module.parent) {
-app.listen(3000);
+app.listen(port);
 //}
 
 module.exports = app;

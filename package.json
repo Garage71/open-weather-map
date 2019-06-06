@@ -4,8 +4,9 @@
   "description": "Open Weather Map application based on NodeJS/React/TypesScript stack",
   "main": "index.js",
   "scripts": {
-    "start": "npm run build && npm run lint && node dist/index.js",
-    "build": "tsc",
+    "start": "node dist/index.js",
+    "build-client": "cd client && npm run build",
+    "build": "npm run build-client && tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsc --watch & nodemon dist",
     "lint": "tsc --noEmit && eslint src/**/*.{js,ts,tsx} --quiet --fix",
