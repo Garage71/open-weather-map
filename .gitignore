@@ -23,3 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 /dist/index.js
 /dist/index.js.map
+dist/index.js
+dist/index.js.map

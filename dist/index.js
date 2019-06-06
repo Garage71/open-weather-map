@@ -17,6 +17,7 @@ const owmApi_1 = require("./api/owmApi");
 const arcgisApi_1 = require("./api/arcgisApi");
 const port = process.env.PORT || 3000;
 const app = new Koa();
+asd;
 const router = new Router();
 router.post('/api/currentByCoordinates', (ctx) => __awaiter(this, void 0, void 0, function* () {
     console.log(ctx.request.body);

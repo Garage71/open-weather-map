@@ -10,7 +10,8 @@ phases:
       - npm install && cd client && npm install
   build:
     commands:
-      - npm run build
+      - tsc
+      - npm run build-client
 artifacts:
   type: zip
   files:
