@@ -10,7 +10,12 @@ phases:
       - npm install && cd client && npm install
   build:
     commands:
+      - echo Build started on `date`
+      - echo Compiling backend
+      - tsc
+      - echo Building Client
       - npm run build
+      - echo Build finished on `date`
 artifacts:
   type: zip
   files:
@@ -18,4 +23,6 @@ artifacts:
     - package.json
     - node_modules/**/*
     - dist/**/*
+    - dist/api/*
+    - dist/services/*
     - build/**/*
