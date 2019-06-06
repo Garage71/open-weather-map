@@ -6,11 +6,11 @@
   "scripts": {
     "start": "node dist/index.js",
     "build-client": "cd client && npm run build",
-    "build": "npm run build-client && tsc",
+    "build": "npm run tsc && npm run build-client",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsc --watch & nodemon dist",
     "lint": "tsc --noEmit && eslint src/**/*.{js,ts,tsx} --quiet --fix",
-    "tsc": "tsc"
+    "tsc": "echo \"Running TypeScript compiler\" && tsc"
   },
   "repository": {
     "type": "git",
