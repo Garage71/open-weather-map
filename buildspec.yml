@@ -1,0 +1,15 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      # Install dependencies needed for running tests
+      - npm install && cd client && npm install
+artifacts:
+  type: zip
+  files:
+    - README.md
+    - package.json
+    - node_modules/**/*
+    - dist/**/*
+    - build/**/*
