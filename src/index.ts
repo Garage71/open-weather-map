@@ -5,6 +5,7 @@ import * as Logger from 'koa-logger';
 import * as BodyParser from 'koa-bodyparser';
 import { getCurrentByCoordinates, getForecastByCoordinates } from './api/owmApi';
 import { suggest, getCoordinates } from './api/arcgisApi';
+import { getCoordsByIp } from './api/extremeIpApi';
 
 const port = process.env.PORT || 3000;
 const app = new Koa();
@@ -43,6 +44,15 @@ router.post(
         console.log(ctx.request.body);
         const { magicKey } = ctx.request.body;
         const coordinates = await getCoordinates(magicKey);
+        ctx.response.body = coordinates;
+    },
+);
+router.post(
+    '/api/coordsbyip',
+    async (ctx): Promise<void> => {
+        console.log(ctx.request.body);
+        const { ip } = ctx.request.body;
+        const coordinates = await getCoordsByIp(ip);
         ctx.response.body = coordinates;
     },
 );

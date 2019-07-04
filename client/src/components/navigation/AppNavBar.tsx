@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 //import { connect } from 'react-redux';
 import { Theme } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -7,15 +8,15 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import { withStyles } from '@material-ui/core/styles';
 import { NavLink } from 'react-router-dom';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import { AddComment, TableChart } from '@material-ui/icons';
+import { Cloud, BrightnessMedium, Menu, Satellite } from '@material-ui/icons';
+import Hidden from '@material-ui/core/Hidden';
 
 interface AppDrawerProps {
     classes: any;
@@ -23,136 +24,130 @@ interface AppDrawerProps {
 
 interface AppDrawerState {
     value: number;
+    open: boolean;
 }
 
 class AppNavBar extends React.Component<AppDrawerProps, AppDrawerState> {
     private routes = [
-        { path: '/tasks', title: 'Task list', icon: (): React.ReactElement => <TableChart /> },
-        { path: '/addtask', title: 'Add new task', icon: (): React.ReactElement => <AddComment /> },
+        { path: '/', title: 'Current weather', icon: (): React.ReactElement => <Cloud /> },
+        { path: '/forecast', title: 'Forecast', icon: (): React.ReactElement => <BrightnessMedium /> },
+        { path: '/map', title: 'Map', icon: (): React.ReactElement => <Satellite /> },
     ];
     public constructor(props: AppDrawerProps) {
         super(props);
         this.state = {
             value: 0,
+            open: false,
         };
     }
     private highlightItem = (route: string, pathname: string): boolean => {
-        if (pathname === '/') {
-            return route === '/tasks';
-        }
-
         if (pathname === route) {
             return true;
         }
-
-        if (pathname.indexOf(route) === 0) {
-            return true;
-        }
-
         return false;
     };
 
-    private handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    private handleDrawerToggle = () => {
         this.setState({
-            value: newValue,
+            open: !this.state.open,
         });
     };
 
+    private drawerItems = (classes: any, routes: any[], pathname: string) => (
+        <React.Fragment>
+            <div className={classes.toolbar} />
+            <Divider />
+            <List>
+                {routes.map(
+                    (route, index): React.ReactElement => (
+                        <NavLink
+                            key={index}
+                            exact={true}
+                            activeClassName={classes.current}
+                            className={classes.link}
+                            to={route.path}
+                        >
+                            <ListItem
+                                button={true}
+                                key={route.title}
+                                selected={this.highlightItem(route.path, pathname)}
+                                onClick={this.handleDrawerToggle}
+                            >
+                                <ListItemIcon>{route.icon()}</ListItemIcon>
+                                <ListItemText primary={route.title} />
+                            </ListItem>
+                        </NavLink>
+                    ),
+                )}
+            </List>
+        </React.Fragment>
+    );
+
     public render(): React.ReactNode {
         const { classes } = this.props;
-        const { value } = this.state;
         const { pathname } = window.location;
+        const { open } = this.state;
         return (
             <div className={classes.drawer}>
                 <CssBaseline />
                 <AppBar position="fixed" className={classes.appBar}>
                     <Toolbar>
+                        <IconButton
+                            edge="start"
+                            color="inherit"
+                            aria-label="Open drawer"
+                            onClick={this.handleDrawerToggle}
+                            className={classes.navIconHide}
+                        >
+                            <Menu />
+                        </IconButton>
                         <Typography variant="h6" color="inherit" noWrap={true}>
                             Open Weather Map App
                         </Typography>
                     </Toolbar>
                 </AppBar>
-                <div className={classes.root}>
-                    <Tabs variant="standard" value={value} onChange={this.handleChange} className={classes.tabs}>
-                        {this.routes.map(
-                            (route, index): React.ReactElement => (
-                                <Tab
-                                    key={index}
-                                    onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-                                        event.preventDefault();
-                                    }}
-                                    label={route.title}
-                                    icon={route.icon()}
-                                >
-                                    <NavLink
-                                        key={index}
-                                        exact={true}
-                                        activeClassName={classes.current}
-                                        className={classes.link}
-                                        to={route.path}
-                                    >
-                                        <ListItem
-                                            button={true}
-                                            key={route.title}
-                                            selected={this.highlightItem(route.path, pathname)}
-                                        >
-                                            <ListItemIcon>{route.icon()}</ListItemIcon>
-                                            <ListItemText primary={route.title} />
-                                        </ListItem>
-                                    </NavLink>
-                                </Tab>
-                            ),
-                        )}
-                    </Tabs>
-                </div>
 
-                {/*
-                <Drawer
-                    className={classes.drawer}
-                    variant="permanent"
-                    classes={{
-                        paper: classes.drawerPaper,
-                    }}
-                    anchor="top"
-                >
-                    <div className={classes.toolbar} />
-                    <Divider />
-                    <List>
-                        {this.routes.map(
-                            (route, index): React.ReactElement => (
-                                <NavLink
-                                    key={index}
-                                    exact={true}
-                                    activeClassName={classes.current}
-                                    className={classes.link}
-                                    to={route.path}
-                                >
-                                    <ListItem
-                                        button={true}
-                                        key={route.title}
-                                        selected={this.highlightItem(route.path, pathname)}
-                                    >
-                                        <ListItemIcon>{route.icon()}</ListItemIcon>
-                                        <ListItemText primary={route.title} />
-                                    </ListItem>
-                                </NavLink>
-                            ),
-                        )}
-                    </List>
-                </Drawer>
-                            */}
+                <Hidden smUp implementation="js">
+                    <Drawer
+                        variant="temporary"
+                        anchor={'left'}
+                        open={open}
+                        onClose={this.handleDrawerToggle}
+                        classes={{
+                            paper: classes.drawerPaper,
+                        }}
+                        ModalProps={{
+                            keepMounted: true, // Better open performance on mobile.
+                        }}
+                    >
+                        {this.drawerItems(classes, this.routes, pathname)}
+                    </Drawer>
+                </Hidden>
+                <Hidden xsDown implementation="js">
+                    <Drawer
+                        classes={{
+                            paper: classes.drawerPaper,
+                        }}
+                        variant="permanent"
+                        open
+                    >
+                        {this.drawerItems(classes, this.routes, pathname)}
+                    </Drawer>
+                </Hidden>
             </div>
         );
     }
 }
 
-const drawerHeight = 50;
+const drawerWidth = 240;
 
 const styles = (theme: Theme): object => ({
     appBar: {
-        // marginLeft: drawerHeight,
+        [theme.breakpoints.up('lg')]: {
+            paddingLeft: drawerWidth,
+        },
         // height: `calc(100% - ${drawerHeight}px)`,
-        height: 70,
+        height: 65,
         // maxWidth: 1280,
     },
     content: {
@@ -162,11 +157,11 @@ const styles = (theme: Theme): object => ({
     },
     drawer: {
         flexShrink: 0,
-        height: drawerHeight,
-        width: 'auto',
+        width: drawerWidth,
+        height: 'auto',
     },
     drawerPaper: {
-        height: drawerHeight,
+        width: drawerWidth,
     },
     root: {
         display: 'flex',
@@ -180,6 +175,11 @@ const styles = (theme: Theme): object => ({
     tabs: {
         paddingTop: 70,
         flexDirection: 'row',
+    },
+    navIconHide: {
+        [theme.breakpoints.up('lg')]: {
+            display: 'none',
+        },
     },
 });
 
