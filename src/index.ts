@@ -15,8 +15,8 @@ router.post(
     '/api/currentByCoordinates',
     async (ctx): Promise<void> => {
         console.log(ctx.request.body);
-        const { lattitude, longitude } = ctx.request.body;
-        const weather = await getCurrentByCoordinates(lattitude, longitude);
+        const { latitude, longitude } = ctx.request.body;
+        const weather = await getCurrentByCoordinates(latitude, longitude);
         ctx.response.body = weather;
     },
 );
@@ -24,8 +24,8 @@ router.post(
     '/api/forecastByCoordinates',
     async (ctx): Promise<void> => {
         console.log(ctx.request.body);
-        const { lattitude, longitude } = ctx.request.body;
-        const forecast = await getForecastByCoordinates(lattitude, longitude);
+        const { latitude, longitude } = ctx.request.body;
+        const forecast = await getForecastByCoordinates(latitude, longitude);
         ctx.response.body = forecast;
     },
 );

@@ -1,6 +1,5 @@
 import * as React from 'react';
-
-//import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { Theme } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -17,26 +16,31 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Cloud, BrightnessMedium, Menu, Satellite } from '@material-ui/icons';
 import Hidden from '@material-ui/core/Hidden';
+import { withRouter } from 'react-router-dom';
+import { State } from '../../infrastructure/store/state';
+import { bindActionCreators, Dispatch } from 'redux';
+import * as Actions from '../../infrastructure/actions/actions';
 
-interface AppDrawerProps {
-    classes: any;
+interface AppNavBarProps {
+    classes?: any;
+    city: string;
+    country: string;
+    getCoordinates?: () => void;
 }
 
-interface AppDrawerState {
-    value: number;
+interface AppNavBarState {
     open: boolean;
 }
 
-class AppNavBar extends React.Component<AppDrawerProps, AppDrawerState> {
+class AppNavBar extends React.Component<AppNavBarProps, AppNavBarState> {
     private routes = [
         { path: '/', title: 'Current weather', icon: (): React.ReactElement => <Cloud /> },
         { path: '/forecast', title: 'Forecast', icon: (): React.ReactElement => <BrightnessMedium /> },
         { path: '/map', title: 'Map', icon: (): React.ReactElement => <Satellite /> },
     ];
-    public constructor(props: AppDrawerProps) {
+    public constructor(props: AppNavBarProps) {
         super(props);
         this.state = {
-            value: 0,
             open: false,
         };
     }
@@ -52,6 +56,12 @@ class AppNavBar extends React.Component<AppDrawerProps, AppDrawerState> {
             open: !this.state.open,
         });
     };
+
+    public componentDidMount() {
+        if (this.props.getCoordinates) {
+            this.props.getCoordinates();
+        }
+    }
 
     private drawerItems = (classes: any, routes: any[], pathname: string) => (
         <React.Fragment>
@@ -183,5 +193,21 @@ const styles = (theme: Theme): object => ({
     },
 });
 
-//export default withRouter(connect(mapStateToProps)(withStyles(styles as any, { withTheme: true })(DrawerWithNavigation as any)) as any);
-export default withStyles(styles, { withTheme: true })(AppNavBar);
+const mapStateToProps = (state: State): AppNavBarProps => ({
+    city: state.location.city,
+    country: state.location.country,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch) =>
+    bindActionCreators(
+        {
+            getCoordinates: Actions.getCoordinates,
+        },
+        dispatch,
+    );
+
+export default withRouter(connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(withStyles(styles as any, { withTheme: true })(AppNavBar as any)) as any);
+//export default withStyles(styles, { withTheme: true })(AppNavBar);

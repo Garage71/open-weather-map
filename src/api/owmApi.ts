@@ -4,8 +4,8 @@ import * as apiKeys from './apiKeys.json';
 const baseUrl = 'https://api.openweathermap.org/data/2.5/';
 const owmKey = apiKeys.owmKey;
 
-export const getCurrentByCoordinates = async (lattitude: number, logitude: number): Promise<object> => {
-    const url = `${baseUrl}weather/?lat=${lattitude}&lon=${logitude}&appid=${owmKey}&units=metric`;
+export const getCurrentByCoordinates = async (latitude: number, logitude: number): Promise<object> => {
+    const url = `${baseUrl}weather/?lat=${latitude}&lon=${logitude}&appid=${owmKey}&units=metric`;
     try {
         const response = await axios.get(url);
         return response.data;
@@ -15,8 +15,8 @@ export const getCurrentByCoordinates = async (lattitude: number, logitude: numbe
     }
 };
 
-export const getForecastByCoordinates = async (lattitude: number, logitude: number): Promise<object> => {
-    const url = `${baseUrl}forecast/?lat=${lattitude}&lon=${logitude}&appid=${owmKey}&units=metric`;
+export const getForecastByCoordinates = async (latitude: number, logitude: number): Promise<object> => {
+    const url = `${baseUrl}forecast/?lat=${latitude}&lon=${logitude}&appid=${owmKey}&units=metric`;
     try {
         const response = await axios.get(url);
         return response.data;
