@@ -143,7 +143,7 @@ const drawerWidth = 240;
 
 const styles = (theme: Theme): object => ({
     appBar: {
-        [theme.breakpoints.up('lg')]: {
+        [theme.breakpoints.up('sm')]: {
             paddingLeft: drawerWidth,
         },
         // height: `calc(100% - ${drawerHeight}px)`,
@@ -177,7 +177,7 @@ const styles = (theme: Theme): object => ({
         flexDirection: 'row',
     },
     navIconHide: {
-        [theme.breakpoints.up('lg')]: {
+        [theme.breakpoints.up('sm')]: {
             display: 'none',
         },
     },
