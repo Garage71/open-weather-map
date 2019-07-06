@@ -123,7 +123,7 @@ class AppNavBar extends React.Component<AppDrawerProps, AppDrawerState> {
                         {this.drawerItems(classes, this.routes, pathname)}
                     </Drawer>
                 </Hidden>
-                <Hidden xsDown implementation="js">
+                <Hidden smDown implementation="js">
                     <Drawer
                         classes={{
                             paper: classes.drawerPaper,
