@@ -17,7 +17,12 @@ router.post(
         console.log(ctx.request.body);
         const { latitude, longitude } = ctx.request.body;
         const weather = await getCurrentByCoordinates(latitude, longitude);
-        ctx.response.body = weather;
+        if (weather) {
+            ctx.response.body = weather;
+        } else {
+            ctx.response.status = 503;
+            ctx.response.body = {};
+        }
     },
 );
 router.post(

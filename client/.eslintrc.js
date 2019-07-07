@@ -15,6 +15,10 @@ module.exports = {
         // e.g. "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/explicit-function-return-type": "off",
+        // Webpack specific settings
+        "@typescript-eslint/no-var-requires": "off",
+        "@typescript-eslint/camelcase": "off",
+        "@typescript-eslint/no-use-before-define": "off",
     },
     settings: {
         "react": {

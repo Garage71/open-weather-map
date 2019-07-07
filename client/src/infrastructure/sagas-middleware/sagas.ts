@@ -4,6 +4,8 @@ import * as Actions from '../actions/actions';
 import * as ActionTypes from '../actions/actionTypes';
 import { coordinates } from '../selectors';
 import { getCurrentWeather } from './api';
+import { moqCurrentWeather } from './mockData';
+import { Location } from '../store/state';
 
 const getUserLocation = (options: PositionOptions): Promise<Position> =>
     new Promise<Position>((resolve, reject) => {
@@ -29,8 +31,17 @@ function* getCoordinates() {
 function* getCurrent() {
     try {
         const location = yield select(coordinates);
-        const currentWeather = yield call(getCurrentWeather, location.location.coordinates);
+        let currentWeather = yield call(getCurrentWeather, location.coordinates);
+        if (currentWeather.error) {
+            // for offline development purposes
+            currentWeather = moqCurrentWeather;
+        }
         yield put(Actions.getCurrentWeatherComplete(currentWeather));
+        const locationPayload: Location = {
+            city: currentWeather.name,
+            country: currentWeather.sys.country,
+        };
+        yield put(Actions.setLocation(locationPayload));
     } catch {
         yield put(Actions.getCurrentWeatherFailure());
     }

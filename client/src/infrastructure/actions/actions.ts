@@ -1,5 +1,5 @@
 import * as ActionTypes from './actionTypes';
-import { Coords } from '../store/state';
+import { Coords, CurrentWeather, Location } from '../store/state';
 
 export interface Action<T = {}> {
     type: string;
@@ -37,9 +37,9 @@ export const getCurrentWeather = (payload: Coords): Action => {
     };
 };
 
-export const getCurrentWeatherComplete = (payload: any): Action => {
+export const getCurrentWeatherComplete = (payload: CurrentWeather): Action => {
     return {
-        type: ActionTypes.GET_CURRENT_WEATHER_FAILURE,
+        type: ActionTypes.GET_CURRENT_WEATHER_SUCCESS,
         payload,
     };
 };
@@ -47,5 +47,12 @@ export const getCurrentWeatherComplete = (payload: any): Action => {
 export const getCurrentWeatherFailure = (): Action => {
     return {
         type: ActionTypes.GET_CURRENT_WEATHER_FAILURE,
+    };
+};
+
+export const setLocation = (payload: Location): Action => {
+    return {
+        type: ActionTypes.SET_LOCATION,
+        payload,
     };
 };

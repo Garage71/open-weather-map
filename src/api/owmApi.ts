@@ -11,7 +11,7 @@ export const getCurrentByCoordinates = async (latitude: number, logitude: number
         return response.data;
     } catch (ex) {
         console.log(ex);
-        return {};
+        return null;
     }
 };
 
@@ -22,6 +22,6 @@ export const getForecastByCoordinates = async (latitude: number, logitude: numbe
         return response.data;
     } catch (ex) {
         console.log(ex);
-        return {};
+        return null;
     }
 };
