@@ -17,7 +17,7 @@ export const moqCurrentWeather: CurrentWeather = {
     },
     sys: {
         country: 'RU',
-        sunrize: 1562460441,
+        sunrise: 1562460441,
         sunset: 1562527162,
     },
     timezone: 10800,

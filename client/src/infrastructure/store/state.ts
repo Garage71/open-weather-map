@@ -38,7 +38,7 @@ export interface CurrentWeather {
     };
     sys: {
         country: string;
-        sunrize: number;
+        sunrise: number;
         sunset: number;
     };
     timezone: number;

@@ -34,7 +34,7 @@ export const initialState: State = {
         },
         sys: {
             country: '',
-            sunrize: 0,
+            sunrise: 0,
             sunset: 0,
         },
         timezone: 0,

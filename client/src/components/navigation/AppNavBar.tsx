@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
+import Box from '@material-ui/core/Box';
 import List from '@material-ui/core/List';
 import { withStyles } from '@material-ui/core/styles';
 import { NavLink } from 'react-router-dom';
@@ -16,10 +17,11 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Cloud, BrightnessMedium, Menu, Satellite } from '@material-ui/icons';
 import Hidden from '@material-ui/core/Hidden';
-import { withRouter } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 import { State } from '../../infrastructure/store/state';
 import { bindActionCreators, Dispatch } from 'redux';
 import * as Actions from '../../infrastructure/actions/actions';
+import CurrentWeather from '../pages/CurrentWeather';
 
 interface AppNavBarProps {
     classes?: any;
@@ -144,6 +146,12 @@ class AppNavBar extends React.Component<AppNavBarProps, AppNavBarState> {
                         {this.drawerItems(classes, this.routes, pathname)}
                     </Drawer>
                 </Hidden>
+                <Box width="100%">
+                    <main className={classes.content}>
+                        <div className={classes.toolbar} />
+                        <Route path="/" exact={true} component={CurrentWeather} />
+                    </main>
+                </Box>
             </div>
         );
     }
@@ -156,9 +164,7 @@ const styles = (theme: Theme): object => ({
         [theme.breakpoints.up('sm')]: {
             paddingLeft: drawerWidth,
         },
-        // height: `calc(100% - ${drawerHeight}px)`,
         height: 65,
-        // maxWidth: 1280,
     },
     content: {
         backgroundColor: theme.palette.background.default,
@@ -167,7 +173,7 @@ const styles = (theme: Theme): object => ({
     },
     drawer: {
         flexShrink: 0,
-        width: drawerWidth,
+        width: 'auto',
         height: 'auto',
     },
     drawerPaper: {
@@ -210,4 +216,3 @@ export default withRouter(connect(
     mapStateToProps,
     mapDispatchToProps,
 )(withStyles(styles as any, { withTheme: true })(AppNavBar as any)) as any);
-//export default withStyles(styles, { withTheme: true })(AppNavBar);
