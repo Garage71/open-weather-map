@@ -26,7 +26,7 @@ export const currentWeatherView = createSelector(
             location: `${raw.name}, ${raw.sys.country}`,
             cloudiness: `${raw.clouds.all} %`,
             dateTime: unixTimeToLocalDateTime(raw.dt),
-            geoCoords: `[${raw.coord.lon.toFixed(2)},  ${raw.coord.lat.toFixed(2)}]`,
+            geoCoords: `[${raw.coord.lat.toFixed(2)}, ${raw.coord.lon.toFixed(2)}]`,
             humidity: `${raw.main.humidity} %`,
             iconUrl: `http://openweathermap.org/img/wn/${raw.weather[0].icon}@2x.png`,
             pressure: `${raw.main.pressure} hpa`,

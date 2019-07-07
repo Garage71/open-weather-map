@@ -42,7 +42,7 @@ export const initialState: State = {
         weather: [
             {
                 description: '',
-                icon: '',
+                icon: '01d',
                 id: 0,
                 main: '',
             },
