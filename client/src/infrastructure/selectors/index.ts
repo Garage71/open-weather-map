@@ -1,10 +1,11 @@
 import { createSelector } from 'reselect';
-import { State } from '../store/state';
+import { State, CurrentWeather } from '../store/state';
 import { CurrentWeatherPresentation } from './presentationContracts';
 import { unixTimeToLocalDateTime, unixTimeToLocal } from '../utils/time';
 
 export const coordinates = (state: State) => state.location;
 export const weather = (state: State) => state.currentWeather;
+export const forecast = (state: State) => state.forecast;
 
 const getWindDirection = (angle: number): string => {
     if (angle >= 0 && angle < 25) return 'North';
@@ -19,23 +20,44 @@ const getWindDirection = (angle: number): string => {
     return 'No wind';
 };
 
+const mapPresentation = (raw: CurrentWeather): CurrentWeatherPresentation => {
+    const view: CurrentWeatherPresentation = {
+        cloudiness: `${raw.clouds.all} %`,
+        dateTime: unixTimeToLocalDateTime(raw.dt),
+        humidity: `${raw.main.humidity} %`,
+        iconUrl: `http://openweathermap.org/img/wn/${raw.weather[0].icon}@2x.png`,
+        pressure: `${raw.main.pressure} hpa`,
+        temperature: `${raw.main.temp} °C`,
+        weatherCondition: raw.weather[0].main,
+        wind: `${raw.wind.speed} m/s, ${getWindDirection(raw.wind.deg)}`,
+    };
+    if (raw.sys) {
+        view.location = `${raw.name}, ${raw.sys.country}`;
+        view.sunrise = unixTimeToLocal(raw.sys.sunrise);
+        view.sunset = unixTimeToLocal(raw.sys.sunset);
+    }
+    if (raw.coord) {
+        view.geoCoords = `[${raw.coord.lat.toFixed(2)}, ${raw.coord.lon.toFixed(2)}]`;
+    }
+    if (raw.rain) {
+        view.rain = `${raw.rain['1h']} mm`;
+    }
+    if (raw.snow) {
+        view.snow = `${raw.snow['1h']} mm`;
+    }
+    return view;
+};
+
 export const currentWeatherView = createSelector(
     weather,
     (raw): CurrentWeatherPresentation => {
-        const view: CurrentWeatherPresentation = {
-            location: `${raw.name}, ${raw.sys.country}`,
-            cloudiness: `${raw.clouds.all} %`,
-            dateTime: unixTimeToLocalDateTime(raw.dt),
-            geoCoords: `[${raw.coord.lat.toFixed(2)}, ${raw.coord.lon.toFixed(2)}]`,
-            humidity: `${raw.main.humidity} %`,
-            iconUrl: `http://openweathermap.org/img/wn/${raw.weather[0].icon}@2x.png`,
-            pressure: `${raw.main.pressure} hpa`,
-            sunrise: unixTimeToLocal(raw.sys.sunrise),
-            sunset: unixTimeToLocal(raw.sys.sunset),
-            temperature: `${raw.main.temp} °C`,
-            weatherCondition: raw.weather[0].main,
-            wind: `${raw.wind.speed} m/s, ${getWindDirection(raw.wind.deg)}`,
-        };
-        return view;
+        return mapPresentation(raw);
+    },
+);
+
+export const forecastView = createSelector(
+    forecast,
+    (raw: CurrentWeather[]): CurrentWeatherPresentation[] => {
+        return raw ? raw.map(_ => mapPresentation(_)) : [];
     },
 );

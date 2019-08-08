@@ -56,3 +56,23 @@ export const setLocation = (payload: Location): Action => {
         payload,
     };
 };
+
+export const getForecastRequest = (payload: Coords): Action => {
+    return {
+        type: ActionTypes.GET_FORECAST_REQUEST,
+        payload,
+    };
+};
+
+export const getForecastFailure = (): Action => {
+    return {
+        type: ActionTypes.GET_FORECAST_FAILURE,
+    };
+};
+
+export const getForecastComplete = (payload: CurrentWeather[]): Action => {
+    return {
+        type: ActionTypes.GET_FORECAST_SUCCESS,
+        payload,
+    };
+};

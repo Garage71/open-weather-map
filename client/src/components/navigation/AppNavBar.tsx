@@ -22,6 +22,7 @@ import { State } from '../../infrastructure/store/state';
 import { bindActionCreators, Dispatch } from 'redux';
 import * as Actions from '../../infrastructure/actions/actions';
 import CurrentWeather from '../pages/CurrentWeather';
+import Forecast from '../pages/Forecast';
 
 interface AppNavBarProps {
     classes?: any;
@@ -150,6 +151,7 @@ class AppNavBar extends React.Component<AppNavBarProps, AppNavBarState> {
                     <main className={classes.content}>
                         <div className={classes.toolbar} />
                         <Route path="/" exact={true} component={CurrentWeather} />
+                        <Route path="/forecast" exact={true} component={Forecast} />
                     </main>
                 </Box>
             </div>

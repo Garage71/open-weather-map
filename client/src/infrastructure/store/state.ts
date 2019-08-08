@@ -12,6 +12,7 @@ export interface Location {
 export interface State {
     location: Location;
     currentWeather: CurrentWeather;
+    forecast: CurrentWeather[];
 }
 
 export interface Weather {
@@ -22,7 +23,7 @@ export interface Weather {
 }
 
 export interface CurrentWeather {
-    coord: {
+    coord?: {
         lon: number;
         lat: number;
     };
@@ -35,27 +36,31 @@ export interface CurrentWeather {
         temp: number;
         temp_max: number;
         temp_min: number;
+        sea_level?: number;
+        grnd_level?: number;
+        temp_kf?: number;
     };
-    sys: {
+    sys?: {
         country: string;
         sunrise: number;
         sunset: number;
     };
-    timezone: number;
-    visibility: number;
+    timezone?: number;
+    visibility?: number;
     weather: Weather[];
     wind: {
         speed: number;
         deg: number;
     };
     rain?: {
-        '1h': number;
-        '3h': number;
+        '1h'?: number;
+        '3h'?: number;
     };
     snow?: {
-        '1h': number;
-        '3h': number;
+        '1h'?: number;
+        '3h'?: number;
     };
     dt: number;
-    name: string;
+    name?: string;
+    dt_txt?: string;
 }

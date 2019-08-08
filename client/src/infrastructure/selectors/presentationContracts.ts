@@ -1,5 +1,5 @@
 export interface CurrentWeatherPresentation {
-    location: string;
+    location?: string;
     temperature: string;
     iconUrl: string;
     weatherCondition: string;
@@ -8,7 +8,9 @@ export interface CurrentWeatherPresentation {
     cloudiness: string;
     pressure: string;
     humidity: string;
-    sunrise: string;
-    sunset: string;
-    geoCoords: string;
+    sunrise?: string;
+    sunset?: string;
+    geoCoords?: string;
+    rain?: string;
+    snow?: string;
 }

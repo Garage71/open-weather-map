@@ -62,6 +62,18 @@ class CurrentWeather extends React.Component<CurrentWeatherProps> {
                                 <TableCell>Geo coords</TableCell>
                                 <TableCell>{weather.geoCoords}</TableCell>
                             </TableRow>
+                            {weather.rain && (
+                                <TableRow>
+                                    <TableCell>Precipitation</TableCell>
+                                    <TableCell>{weather.rain}</TableCell>
+                                </TableRow>
+                            )}
+                            {weather.snow && (
+                                <TableRow>
+                                    <TableCell>Snowfall</TableCell>
+                                    <TableCell>{weather.snow}</TableCell>
+                                </TableRow>
+                            )}
                         </TableBody>
                     </Table>
                 </Paper>

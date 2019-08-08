@@ -54,4 +54,5 @@ export const initialState: State = {
         dt: 0,
         name: '',
     },
+    forecast: [],
 };

@@ -3,9 +3,19 @@ import { call, put, select, takeEvery } from 'redux-saga/effects';
 import * as Actions from '../actions/actions';
 import * as ActionTypes from '../actions/actionTypes';
 import { coordinates } from '../selectors';
-import { getCurrentWeather } from './api';
-import { moqCurrentWeather } from './mockData';
-import { Location, CurrentWeather } from '../store/state';
+import { getCurrentWeather, getForecastWeather } from './api';
+import { moqCurrentWeather, moqForecast } from './mockData';
+import { Location, CurrentWeather, Coords } from '../store/state';
+
+interface ActionInterface<T = {}> {
+    type: string;
+    payload?: T;
+}
+
+class Action<T = {}> implements ActionInterface<T> {
+    public type: string;
+    public payload?: T;
+}
 
 const getUserLocation = (options: PositionOptions): Promise<Position> =>
     new Promise<Position>((resolve, reject) => {
@@ -50,9 +60,27 @@ function* getCurrent() {
     }
 }
 
+function* getForecast(action: Action<Coords>) {
+    try {
+        const coords = action.payload;
+        const result = yield call(getForecastWeather, coords);
+        let forecast: CurrentWeather[];
+        if (result.error) {
+            // for offline development purposes
+            forecast = moqForecast;
+        } else {
+            forecast = result.data.list;
+        }
+        yield put(Actions.getForecastComplete(forecast));
+    } catch {
+        yield put(Actions.getForecastFailure());
+    }
+}
+
 function* watch(): SagaIterator {
     yield takeEvery(ActionTypes.GET_COORDINATES_REQUEST, getCoordinates);
     yield takeEvery(ActionTypes.GET_COORDINATES_SUCCESS, getCurrent);
+    yield takeEvery(ActionTypes.GET_FORECAST_REQUEST, getForecast);
 }
 
 export default watch;
