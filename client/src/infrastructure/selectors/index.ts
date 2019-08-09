@@ -61,3 +61,10 @@ export const forecastView = createSelector(
         return raw ? raw.map(_ => mapPresentation(_)) : [];
     },
 );
+
+export const forecast24H = createSelector(
+    forecast,
+    (raw: CurrentWeather[]): CurrentWeather[] => {
+        return raw.slice(0, 9);
+    },
+);
