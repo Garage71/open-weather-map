@@ -80,6 +80,7 @@ class Forecast extends React.Component<ForecastProps, ForecastState> {
         return `${splitted[0]}:${splitted[1]}`;
     };
     private twentyFourHoursChart = (forecast: CurrentWeather[], classes: any) => {
+        const precicipations = forecast.map(fc => (fc.rain ? fc.rain['3h'] : null));
         const options: Highcharts.Options = {
             title: {
                 text: null,
@@ -124,23 +125,8 @@ class Forecast extends React.Component<ForecastProps, ForecastState> {
                         style: { color: '#3F51B5' },
                     },
                 },
-                {
-                    title: null,
-                    opposite: true,
-                    labels: {
-                        format: '{value} mm',
-                        style: { color: '#B9B9B9' },
-                    },
-                },
             ],
             series: [
-                {
-                    yAxis: 1,
-                    type: 'column',
-                    name: 'Precipitation',
-                    data: forecast.map(fc => (fc.rain ? fc.rain['3h'] : null)),
-                    color: '#B9B9B9',
-                },
                 {
                     type: 'spline',
                     name: 'Temperature, °C',
@@ -149,6 +135,25 @@ class Forecast extends React.Component<ForecastProps, ForecastState> {
                 },
             ],
         };
+
+        if (precicipations.find(p => !!p)) {
+            const yaxises = options.yAxis as Highcharts.YAxisOptions[];
+            yaxises.push({
+                title: null,
+                opposite: true,
+                labels: {
+                    format: '{value} mm',
+                    style: { color: '#B9B9B9' },
+                },
+            });
+            options.series.unshift({
+                yAxis: 1,
+                type: 'column',
+                name: 'Precipitation',
+                data: forecast.map(fc => (fc.rain ? fc.rain['3h'] : null)),
+                color: '#B9B9B9',
+            });
+        }
 
         return (
             <div className={classes.chart}>
