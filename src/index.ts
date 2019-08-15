@@ -61,6 +61,7 @@ router.post(
         ctx.response.body = coordinates;
     },
 );
+router.redirect('/forecast', '/');
 
 app.use(Logger());
 app.use(BodyParser());
