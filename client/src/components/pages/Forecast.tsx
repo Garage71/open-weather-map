@@ -150,7 +150,7 @@ class Forecast extends React.Component<ForecastProps, ForecastState> {
                 yAxis: 1,
                 type: 'column',
                 name: 'Precipitation',
-                data: forecast.map(fc => (fc.rain ? fc.rain['3h'] : null)),
+                data: forecast.map(fc => (fc.rain && fc.rain['3h'] ? fc.rain['3h'] : null)),
                 color: '#B9B9B9',
             });
         }
@@ -226,7 +226,7 @@ const styles = (theme: Theme): object => ({
             width: 800,
         },
         [theme.breakpoints.down('sm')]: {
-            width: 400,
+            width: 380,
         },
     },
 });
